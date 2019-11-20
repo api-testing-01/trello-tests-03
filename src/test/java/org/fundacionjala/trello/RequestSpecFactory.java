@@ -20,9 +20,9 @@ public final class RequestSpecFactory {
 
     private static RequestSpecification getRequestSpecTrello(final String account) {
         RequestSpecification requestSpecification = new RequestSpecBuilder()
-                .setBaseUri(ENV.getValue("trello.baseUri"))
-                .addQueryParam("key", ENV.getValue(String.format("trello.credentials.%s.appKey", account)))
-                .addQueryParam("token", ENV.getValue(String.format("trello.credentials.%s.token", account)))
+                .setBaseUri(ENV.getValue("baseUri"))
+                .addQueryParam("key", ENV.getValue(String.format("credentials.%s.appKey", account)))
+                .addQueryParam("token", ENV.getValue(String.format("credentials.%s.token", account)))
                 .build();
         return requestSpecification
                 .log().method()
