@@ -8,7 +8,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.it.Ma;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import io.restassured.response.ResponseBodyData;
 import io.restassured.specification.RequestSpecification;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
@@ -108,15 +111,13 @@ public class RequestSteps {
         }
     }
 
-    @And("I look for in {string} list by attribute and value: {string}, {string} and save as {string}")
-    public void iLookForInListByAttributeValueAndSaveAs(final String nameList, final String attribute, final String value, final String key) {
-        Map<String, Object> member = new HashMap<>();
+    @And("I validate the response contains {string} equals {string} in {string} list")
+    public void iValidateTheResponseContainsEqualsInList(final String attribute, final String value, final String nameList) {
         List<Map<String, Object>> arrayCollection = response.jsonPath().get(nameList);
         for (Map<String, Object> json : arrayCollection) {
             if (json.get(attribute).equals(value)) {
-                member = json;
+                Assert.assertEquals(String.valueOf(json.get(attribute)), value);
             }
         }
-        context.set(key, member);
     }
 }

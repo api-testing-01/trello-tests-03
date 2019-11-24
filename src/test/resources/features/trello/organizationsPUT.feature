@@ -46,7 +46,5 @@ Feature: Organizations
     }
     """
     And I validate the response has status code 200
-    And I look for in "members" list by attribute and value: "username", "shekellkan" and save as "member01"
-    And I send a "GET" request to "/members/{member01.id}"
-    And I validate the response has status code 200
+    And I validate the response contains "username" equals "shekellkan" in "members" list
 
