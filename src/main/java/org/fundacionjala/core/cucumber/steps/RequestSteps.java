@@ -6,13 +6,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.it.Ma;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import io.restassured.response.ResponseBodyData;
 import io.restassured.specification.RequestSpecification;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 
@@ -21,10 +16,7 @@ import org.fundacionjala.core.ScenarioContext;
 import org.fundacionjala.core.api.DynamicIdHelper;
 import org.fundacionjala.core.api.RequestManager;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RequestSteps {
 
@@ -112,11 +104,23 @@ public class RequestSteps {
     }
 
     @And("I validate the response contains {string} equals {string} in {string} list")
-    public void iValidateTheResponseContainsEqualsInList(final String attribute, final String value, final String nameList) {
+    public void iValidateTheResponseContainsEqualsInList(final String attribute, final String value,
+                                                         final String nameList) {
         List<Map<String, Object>> arrayCollection = response.jsonPath().get(nameList);
         for (Map<String, Object> json : arrayCollection) {
             if (json.get(attribute).equals(value)) {
                 Assert.assertEquals(String.valueOf(json.get(attribute)), value);
+            }
+        }
+    }
+
+    @And("I validate the response contains {string} equals {string} in {string} json")
+    public void iValidateTheResponseContainsEqualsInJson(final String attribute, final String value,
+                                                         final String nameJson) {
+        Map<String, Object> jsonBody = response.jsonPath().getMap(nameJson);
+        for (Map.Entry<String, Object> data: jsonBody.entrySet()) {
+            if (data.getKey().equals(attribute)) {
+                Assert.assertEquals(String.valueOf(data.getValue()), value);
             }
         }
     }
