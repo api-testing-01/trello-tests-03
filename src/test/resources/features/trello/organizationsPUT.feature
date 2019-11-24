@@ -14,25 +14,25 @@ Feature: Organizations
     And I save the response as "Team03"
     And I save the request endpoint for deleting
 
-#  @cleanData
-#  Scenario: Update an organization
-#    When I send a "PUT" request to "/organizations/{Team03.id}" with json body
-#    """
-#    {
-#    "displayName": "Api Team Updated",
-#    "desc": "description updated from cucumber steps",
-#    "name": "at03up",
-#    "website": "null",
-#    "prefs/permissionLevel": "public"
-#    }
-#    """
-#    And I validate the response has status code 200
-#    Then I validate the response contains:
-#    | displayName           | Api Team Updated                        |
-#    | desc                  | description updated from cucumber steps |
-#    | name                  | at03up                                  |
-#    | website               | null                                    |
-#    | prefs/permissionLevel | public                                  |
+  @cleanData
+  Scenario: Update an organization
+    When I send a "PUT" request to "/organizations/{Team03.id}" with json body
+    """
+    {
+    "displayName": "Api Team Updated",
+    "desc": "description updated from cucumber steps",
+    "name": "at03up",
+    "website": "null",
+    "prefs/permissionLevel": "public"
+    }
+    """
+    And I validate the response has status code 200
+    Then I validate the response contains:
+    | displayName           | Api Team Updated                        |
+    | desc                  | description updated from cucumber steps |
+    | name                  | at03up                                  |
+    | website               | null                                    |
+    | prefs/permissionLevel | public                                  |
 
   @cleanData
   Scenario: Add a team member
