@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 
@@ -15,6 +16,11 @@ import org.fundacionjala.core.JsonHelper;
 import org.fundacionjala.core.ScenarioContext;
 import org.fundacionjala.core.api.DynamicIdHelper;
 import org.fundacionjala.core.api.RequestManager;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RequestSteps {
 
@@ -99,5 +105,17 @@ public class RequestSteps {
                 Assert.assertEquals(String.valueOf(responseMap.get(data.getKey())), data.getValue());
             }
         }
+    }
+
+    @And("I save the {string} list from response as {string}")
+    public void iSaveTheListFromResponseAs(final String nameList, final String key) {
+        List<JSONObject> arrayCollection = response.jsonPath().getList(nameList);
+
+//        context.set(key, arrayCollection);
+    }
+
+    @And("I retrieve and save from {string} list an element using {string}, {string} as {string}")
+    public void iRetrieveAnSaveFromListAnElementUsing(final String nameList, final String attribute, final String value, final String key) {
+//        List<JSONObject> arrayCollection = context.get(nameList);
     }
 }
