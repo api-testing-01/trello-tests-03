@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.it.Ma;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONArray;
@@ -107,15 +108,15 @@ public class RequestSteps {
         }
     }
 
-    @And("I save the {string} list from response as {string}")
-    public void iSaveTheListFromResponseAs(final String nameList, final String key) {
-        List<JSONObject> arrayCollection = response.jsonPath().getList(nameList);
-
-//        context.set(key, arrayCollection);
-    }
-
-    @And("I retrieve and save from {string} list an element using {string}, {string} as {string}")
-    public void iRetrieveAnSaveFromListAnElementUsing(final String nameList, final String attribute, final String value, final String key) {
-//        List<JSONObject> arrayCollection = context.get(nameList);
+    @And("I look for in {string} list by attribute and value: {string}, {string} and save as {string}")
+    public void iLookForInListByAttributeValueAndSaveAs(final String nameList, final String attribute, final String value, final String key) {
+        Map<String, Object> member = new HashMap<>();
+        List<Map<String, Object>> arrayCollection = response.jsonPath().get(nameList);
+        for (Map<String, Object> json : arrayCollection) {
+            if (json.get(attribute).equals(value)) {
+                member = json;
+            }
+        }
+        context.set(key, member);
     }
 }
