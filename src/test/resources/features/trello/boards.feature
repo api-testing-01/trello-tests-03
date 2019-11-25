@@ -2,7 +2,6 @@ Feature: Boards
 
   Background:
     Given I use the "trello" service and the "owner" account
-    |
 
   Scenario: PUT Board
     When I send a "PUT" request to "/boards/{P.id}" with json body
