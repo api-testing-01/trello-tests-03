@@ -5,19 +5,41 @@ Feature: Create cards on a board
     And I send a "POST" request to "/boards" with json body
     """
     {
-    "name": "Board0001 created by cucumber"
+    "name": "Board1 created by cucumber"
     }
     """
     And I save the response as "B"
-    And I send a "Post" request to "/lists" with datatable
-    |idBoard| (B.id)|
-    |name   |firstList|
+    And I save the request endpoint for deleting
+    And I send a "POST" request to "/lists" with json body
+    """
+    {
+    "name": "To_Do",
+    "idBoard": "(B.id)"
+    }
+    """
     And I save the response as "L"
-    And I send a "Post" request to "/cards" with datatable
-     |idList|(L.id)|
 
-    Scenario: Create card
-      Given I send a "POST" request to "/cards" with datatable
-      |name| new card|
-      |idList|(L.id) |
+  @cleanData
+  Scenario Outline: Create card
+    When I send a "POST" request to "/cards" with json body
+    """
+    {
+    "name": "<cardName>",
+    "desc": "<cardDescription>",
+    "idList": "(L.id)"
+    }
+    """
+    And I save the response as "C"
+    Then I validate the response has status code 200
+    And I validate the response contains:
+      | name | <cardName>        |
+      | desc | <cardDescription> |
+
+    Examples:
+      | cardName | cardDescription              |
+      | card     | card1 created by cucumber    |
+      | c@rd     | card with special characters |
+      | c ard    | card with blank spaces       |
+      | card1    | card with numbers on name    |
+
     
