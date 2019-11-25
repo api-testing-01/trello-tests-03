@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import org.fundacionjala.core.Environment;
